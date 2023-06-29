@@ -21,7 +21,7 @@ Play the snake game, or let the snake game play itself. Let an AI control the sn
 
 The Snake Game with Genetic Algorithm is a project that combines the classic Snake game with an artificial intelligence (AI) agent that controls the snake using a neural network. The genetic algorithm is utilized to optimize the AI's performance over multiple generations. This project provides an interactive and challenging environment to observe the evolution of the AI-controlled snake's behavior.
 
-![Snake Game Screenshot](figures/snake_game.jpeg)
+![Snake Game Screenshot](figures/snake_game.jpg)
 
 ## Features
 
