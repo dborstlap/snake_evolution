@@ -42,17 +42,17 @@ The Snake Game with Genetic Algorithm is a project that combines the classic Sna
 1. Clone the repository:
    ```shell
    git clone https://github.com/your-username/snake-genetic-algorithm.git
-
+   ```
 
 2. Navigate to the project directory:
    ```shell
    cd snake-genetic-algorithm
-
+   ```
 
 3. Install the required dependencies:
    ```shell
    pip install -r requirements.txt
-
+   ```
 
 
 ## Usage
@@ -60,6 +60,7 @@ The Snake Game with Genetic Algorithm is a project that combines the classic Sna
 To start the Snake game with the AI-controlled snake:
    ```shell
    python snake_game.py
+   ```
 
 Follow the on-screen instructions to play or observe the AI-controlled snake. Use the arrow keys to control the snake manually when playing.
 
