@@ -2,7 +2,7 @@
 Play the snake game, or let the snake game play itself. Let an AI control the snake using a neural net, and train it using a genetic algorithm. Visualize how the ai-controlled snake behaves by itself.
 
 
-![Snake Game Demo](video/25_10x10.mp4)
+![Snake Game Demo](video/25_10x10.gif)
 
 ## Table of Contents
 
