@@ -44,6 +44,55 @@ The Snake Game with Genetic Algorithm is a project that combines the classic Sna
    git clone https://github.com/your-username/snake-genetic-algorithm.git
 
 
+2. Navigate to the project directory:
+   ```shell
+   cd snake-genetic-algorithm
+
+
+3. Install the required dependencies:
+   ```shell
+   pip install -r requirements.txt
+
+
+
+## Usage
+
+To start the Snake game with the AI-controlled snake:
+   ```shell
+   python snake_game.py
+
+Follow the on-screen instructions to play or observe the AI-controlled snake. Use the arrow keys to control the snake manually when playing.
+
+
+
+## Genetic Algorithm
+
+The genetic algorithm is a key component of this project, driving the optimization of the AI-controlled snake's behavior. It operates as follows:
+
+1. Initialization: The algorithm starts by generating an initial population of AI-controlled snakes with random neural network parameters.
+
+2. Evaluation: Each snake in the population plays the Snake game, and its fitness is evaluated based on score, survival time, and efficiency of movements.
+
+3. Selection: Snakes with higher fitness scores have a higher chance of being selected as parents for the next generation. The selection process can use various techniques such as roulette wheel selection or tournament selection.
+
+4. Crossover: The selected parent snakes undergo crossover, which involves combining their neural network parameters to create new offspring snakes.
+
+5. Mutation: To introduce genetic diversity and avoid getting stuck in local optima, the offspring snakes undergo random mutations in their neural network parameters.
+
+6. Next Generation: The new offspring snakes form the next generation, replacing the previous population.
+
+7. Repeat: Steps 2 to 6 are repeated for a specified number of generations.
+
+
+## Results and Conclusion
+The results and conclusion of the genetic algorithm's optimization process can be saved and analyzed. The project provides functionality to store important data, such as the best snake's neural network parameters, fitness scores, and generation-wise statistics. These results can be used to evaluate the performance and effectiveness of the genetic algorithm in improving the AI-controlled snake's gameplay.
+
+To view the saved data and analysis, refer to the results directory. Detailed conclusions and insights can be found in the report.
+
+
+
+
+
 
 
 
