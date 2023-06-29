@@ -1,5 +1,5 @@
 # snake_evolution
-Play the snake game, or let the snake game play itself. Let an AI control the snake using a neural net, and improve it using a genetic algorithm.
+Play the snake game, or let the snake game play itself. Let an AI control the snake using a neural net, and train it using a genetic algorithm. Visualize how the ai-controlled snake behaves by itself.
 
 
 ![Snake Game Demo](demo.gif) <!-- Replace this line with the path or link to your actual GIF -->
