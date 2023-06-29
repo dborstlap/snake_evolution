@@ -245,7 +245,7 @@ class SnakeGame:
             frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             video_writer.write(frame_rgb)
         video_writer.release()
-        print('video saved. Jeeej')
+        print('video saved')
            
     
 

@@ -1,5 +1,3 @@
-import math
-import random
 import numpy as np
 
 
@@ -10,9 +8,11 @@ N_Y = 4
 
 NUM_WEIGHTS = N_X*N_H1 + N_H1*N_H2 + N_H2*N_Y
 
-
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))
+
+def relu(x):
+    return np.maximum(0, x)
 
 class NeuralNetwork:
     def __init__(self, params):
@@ -20,7 +20,7 @@ class NeuralNetwork:
         self.N_H1 = N_H1
         self.N_H2 = N_H2
         self.N_Y = N_Y
-        self.num_weights = N_X*N_H1 + N_H1*N_H2 + N_H2*N_Y
+        self.num_weights = NUM_WEIGHTS
 
         # self.weights1 = np.random.randn(N_H1, N_X)
         # self.bias1 = 0 # np.random.randn(N_H1)
@@ -33,9 +33,9 @@ class NeuralNetwork:
 
 
     def forward(self, x):
-        hidden1 = sigmoid(np.dot(self.weights1, x) + self.bias1)
-        hidden2 = sigmoid(np.dot(self.weights2, hidden1) + self.bias2)
-        output = sigmoid(np.dot(self.weights3, hidden2) + self.bias3)
+        hidden1 = relu(np.dot(self.weights1, x) + self.bias1)
+        hidden2 = relu(np.dot(self.weights2, hidden1) + self.bias2)
+        output = relu(np.dot(self.weights3, hidden2) + self.bias3)
         return output
     
     # get all weights and biases in list. These are optimisation variables

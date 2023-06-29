@@ -20,7 +20,7 @@ def read_last_row(csv_file):
     with open(csv_file, 'r') as file:
         reader = csv.reader(file)
         data = list(reader)
-        last_row = [float(value) for value in data[-10]]
+        last_row = [float(value) for value in data[-1]]
     return last_row
 
 

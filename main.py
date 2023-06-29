@@ -10,22 +10,33 @@
 
 # imports
 from genetic_algorithm import initialize_population, evolve_population, evaluate_fitness
-from save_data import save_genes, save_score
+from save_data import save_genes, save_score, save_dict_to_file
 from snake_game import run_game
 import numpy as np
+from neural_net import N_H1, N_H2
 
 # constants
 POPULATION_SIZE = 1000
 MUTATION_RATE = 0.01
-PARENT_FRACTION = 0.01
+PARENT_FRACTION = 0.1
 GENERATIONS = 1000
 MAX_AGE = 1000
 
-
 run_evolution = True
 
-
 if run_evolution:
+
+    hyper_params = {
+    'POPULATION_SIZE': POPULATION_SIZE,
+    'MUTATION_RATE': MUTATION_RATE,
+    'PARENT_FRACTION': PARENT_FRACTION,
+    'GENERATIONS': GENERATIONS,
+    'MAX_AGE': MAX_AGE,
+    'N_H': [N_H]
+    }
+
+    save_dict_to_file(hyper_params)
+
     population = initialize_population(POPULATION_SIZE)
 
     for generation in range(GENERATIONS):

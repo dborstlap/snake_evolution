@@ -9,7 +9,6 @@ import random
 import numpy as np
 from snake_game import Snake, SnakeGame
 from neural_net import NUM_WEIGHTS
-import copy
 
 
 

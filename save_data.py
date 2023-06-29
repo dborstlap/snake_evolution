@@ -2,6 +2,7 @@
 import csv
 import os
 import numpy as np
+import json
 
 # current working directory
 cwd = os.getcwd()
@@ -55,4 +56,22 @@ def save_score(score, generation):
     
         # Close the file object
         file.close()
+
+
+
+def save_dict_to_file(dictionary):
+    with open('data/hyper_parameters.json', 'w') as file:
+        json.dump(dictionary, file)
+
+def load_dict_from_file(file_path):
+    with open(file_path, 'r') as file:
+        dictionary = json.load(file)
+    return dictionary
+
+
+
+
+
+
+
 
