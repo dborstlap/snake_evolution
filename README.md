@@ -57,7 +57,12 @@ The Snake Game with Genetic Algorithm is a project that combines the classic Sna
 
 ## Usage
 
-To start the Snake game with the AI-controlled snake:
+To run the genetic algorithm, save the data and visualize the results, run the main script.
+   ```shell
+   python main.py
+   ```
+
+If you just want to play the snake game manually, run snake_game.py and first set variable manual_control=True, ai_control=False.
    ```shell
    python snake_game.py
    ```
