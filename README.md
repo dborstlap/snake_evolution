@@ -32,16 +32,12 @@ The Snake Game with Genetic Algorithm is a project that combines the classic Sna
 - Customizable design parameters for the neural network and genetic algorithm.
 - Save and analyze results and conclusions from the optimization process.
 
-## Requirements
-
-- Python 3.x
-- Pygame library
 
 ## Installation
 
 1. Clone the repository:
    ```shell
-   git clone https://github.com/your-username/snake-genetic-algorithm.git
+   git clone https://github.com/dborstlap/snake-genetic-algorithm.git
    ```
 
 2. Navigate to the project directory:
