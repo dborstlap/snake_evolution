@@ -11,9 +11,11 @@ import numpy as np
 import cv2
 import os
 
+# Three different control functions which can all act at the same time (though it is recomended to choose one at a time). For normal playing, put key_control=True and all rest to False.
 key_control = False
 auto_control = False
 ai_control = True
+
 
 # Game constants
 GRID_WIDTH = 10
@@ -157,7 +159,7 @@ class SnakeGame:
                     self.frame_list.append(frame)
 
 
-            # control directions based on arraw keys
+            # control directions based on arrow keys
             if key_control:
                 keyboard_snake_control(self.snake, self.food)
 

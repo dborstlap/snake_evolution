@@ -91,12 +91,33 @@ The genetic algorithm is a key component of this project, driving the optimizati
 
 
 
-## Code and file structure
+## Code structure
 
 ### main.py
 This is the main run-file. It has functionality to start the generic algorithm training process, or to simply play a snake game manually based on set variables. Also some hyperparameters can be defined here, which will influence the game-play or optimization process.
 
 ### snake_game.py
+The game is defined here. It is made of three function classes:
+SnakeGame is a class defining game mechanics.
+Snake is a snake object that can play the game.
+Food is a object that represents food in the map.
+This file also contains some control functions, allowing for choosing manual gameplay using keys, automatic gameplay (hardcoded algorithms) and ai-controlled game-play.
+
+### genetic_algorithm.py
+Defines all functions needed to create a functioning genetic algorithm
+
+### neural_net.py
+Defines a neural network function which is basically the automatic controller of a snake game. The hyperparameters of the neural netork can be defined here. The neural network gets some state variables such as relative food position as input, and gives a movement direction as output.
+
+### run_simulation
+This file takes snake genes (neural-network parameters), and runs a simulation based on these inputs. These neural network parameters can be self-defined (if you randomly choose some numbers yourself, the snake will likely not perform well), or you can take the best results from the last training iteration by reading from a file.
+
+### save_data.py
+Contains some help functions to save data to be used or analysed later
+
+### visualize_data.py
+Contains some help functions to process data and visualize it in the form of graphs to aid analysis
+
 
 
 ## Results and Conclusion
