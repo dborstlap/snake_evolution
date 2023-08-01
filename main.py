@@ -8,6 +8,13 @@
 ##################################################################################
 
 
+#TODO
+# make it possible to run main.py in terminal, and give it standard inputs to choose between play_yourself of train_ai
+# check installation procedure in readme
+# Readme maybe add problem defenition and goals for this project in the beginning.
+# and Readme also add section about hyperparameters maybe
+
+
 # imports
 from genetic_algorithm import initialize_population, evolve_population, evaluate_fitness
 from save_data import save_genes, save_score, save_dict_to_file
@@ -56,7 +63,6 @@ if run_evolution:
 
     # end result best snake
     print(best_snake.genes)
-
 
 
 
