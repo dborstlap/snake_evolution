@@ -123,7 +123,8 @@ Contains some help functions to process data and visualize it in the form of gra
 
 ## Results and Conclusion
 After many iterations of hyperparameters (analysis and values are shared in the report), the snake game is let to optimise itself for 2000 generations. The result is a snake which became fairly good at playing the game, given the limited amount of inputs it could use.
-![Snake Game Screenshot](figures/run_final.jpg)
+
+![Snake Game Screenshot](figures/run_final.png)
 
 More results can also be found in the report.
 
