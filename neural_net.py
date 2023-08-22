@@ -1,12 +1,10 @@
 import numpy as np
 
 
-N_X = 6
-N_H1 = 5
-N_H2 = 5
-N_Y = 4
-
-NUM_WEIGHTS = N_X*N_H1 + N_H1*N_H2 + N_H2*N_Y
+NODES = [6,5,4]
+def change_nodes(x):
+    global NODES 
+    NODES = [6,5,4]
 
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))
@@ -14,48 +12,170 @@ def sigmoid(x):
 def relu(x):
     return np.maximum(0, x)
 
-class NeuralNetwork:
-    def __init__(self, params):
-        self.N_X = N_X
-        self.N_H1 = N_H1
-        self.N_H2 = N_H2
-        self.N_Y = N_Y
-        self.num_weights = NUM_WEIGHTS
 
-        # self.weights1 = np.random.randn(N_H1, N_X)
-        # self.bias1 = 0 # np.random.randn(N_H1)
-        # self.weights2 = np.random.randn(N_H2, N_H1)
-        # self.bias2 = 0 # np.random.randn(N_H2)
-        # self.weights3 = np.random.randn(N_Y, N_H2)
-        # self.bias3 = 0 # np.random.randn(N_Y)
-
-        self.set_params(params)
+ACTIVATION_FUNCTION = relu
 
 
-    def forward(self, x):
-        hidden1 = relu(np.dot(self.weights1, x) + self.bias1)
-        hidden2 = relu(np.dot(self.weights2, hidden1) + self.bias2)
-        output = relu(np.dot(self.weights3, hidden2) + self.bias3)
-        return output
+
+
+
+class Linear:
+    def __init__(self, n_inputs, n_outputs):
+
+        self.n_inputs = n_inputs
+        self.n_outputs = n_outputs
+        self.weights = np.zeros((n_outputs, n_inputs))
+        self.bias = np.zeros(n_outputs)
+
+        self.n_weights = len(self.weights.flatten())
+        self.n_bias = len(self.bias.flatten())
+
+    def forward(self, X):
+        Y = np.dot(self.weights, X) + self.bias
+        return Y
     
-    # get all weights and biases in list. These are optimisation variables
-    def get_params(self):
-        weights1 = self.weights1.flatten()
-        weights2 = self.weights2.flatten()
-        weights3 = self.weights3.flatten()
+    def set_weights(self, weights):
+        self.weights = weights
 
-        params = np.hstack([weights1, weights2, weights3])
-        return params
+    def set_bias(self, bias):
+        self.bias = bias
+
+    def get_weights(self):
+        return self.weights
     
+    def get_bias(self):
+        return self.bias
+    
+
+# def calculate_n_params(nodes):
+#     nn_example = NeuralNet(nodes)
+#     return nn_example.n_params
+
+
+class NeuralNet:
+    def __init__(self):
+
+        self.nodes = NODES
+        self.n_layers = len(self.nodes)
+        
+
+        self.nn = []
+        for i in range(1,self.n_layers):
+            n_inputs = self.nodes[i-1]
+            n_outputs = self.nodes[i]
+
+            layer = Linear(n_inputs, n_outputs)
+
+            self.nn.append(layer)
+
+        # self.n_params_total = 0
+        # for layer in self.nn:
+        #     self.n_params_total += layer.n_weights + layer.n_bias
+
+        self.n_params = sum([layer.n_weights + layer.n_bias for layer in self.nn])
+
     def set_params(self, params):
-        params = np.array(params)
-        self.weights1 = params[ : N_X*N_H1].reshape((N_H1, N_X))
-        self.weights2 = params[N_X*N_H1 : N_X*N_H1 + N_H2*N_H1].reshape((N_H2, N_H1))
-        self.weights3 = params[N_X*N_H1 + N_H2*N_H1 : ].reshape((N_Y, N_H2))
 
-        self.bias1 = 0
-        self.bias2 = 0
-        self.bias3 = 0
+        self.params = params
+
+        for layer in self.nn:
+            n_inputs = layer.n_inputs
+            n_outputs = layer.n_outputs
+
+            n_weights = n_inputs * n_outputs
+            n_bias = n_outputs
+
+            new_weights = params[:n_weights].reshape(n_outputs, n_inputs)
+            params = params[n_weights:]
+            layer.weights = new_weights
+
+            new_bias = params[:n_bias]
+            params = params[n_bias:]
+            layer.bias = new_bias
+
+    def get_params(self):
+        return self.params
+
+
+    def forward(self, X):
+
+        for layer in self.nn:
+            X = ACTIVATION_FUNCTION(layer.forward(X))
+
+        return X
+
+
+
+
+
+# class NeuralNetwork:
+#     def __init__(self, params):
+#         self.set_params(params)
+
+#     def forward(self, x):
+#         # hidden1 = relu(np.dot(self.weights1, x) + self.bias1)
+#         # hidden2 = relu(np.dot(self.weights2, hidden1) + self.bias2)
+#         output = relu(np.dot(self.weights1, x) + self.bias1)
+#         return output
+    
+#     # get all weights and biases in list. These are optimisation variables
+#     def get_params(self):
+#         weights1 = self.weights1.flatten()
+
+#         params = np.hstack([weights1])
+#         return params
+    
+#     def set_params(self, params):
+#         params = np.array(params)
+#         self.weights1 = params.reshape((N_Y, N_X))
+
+#         self.bias1 = 0
+#         self.bias2 = 0
+#         self.bias3 = 0
+
+
+
+# class NeuralNetwork:
+#     def __init__(self, params):
+#         self.N_X = N_X
+#         self.N_H = N_H
+#         self.N_Y = N_Y
+#         self.num_weights = NUM_WEIGHTS
+
+#         # self.weights1 = np.random.randn(N_H1, N_X)
+#         # self.bias1 = 0 # np.random.randn(N_H1)
+#         # self.weights2 = np.random.randn(N_H2, N_H1)
+#         # self.bias2 = 0 # np.random.randn(N_H2)
+#         # self.weights3 = np.random.randn(N_Y, N_H2)
+#         # self.bias3 = 0 # np.random.randn(N_Y)
+
+#         self.set_params(params)
+
+
+#     def forward(self, x):
+#         hidden1 = relu(np.dot(self.weights1, x) + self.bias1)
+#         # hidden2 = relu(np.dot(self.weights2, hidden1) + self.bias2)
+#         output = relu(np.dot(self.weights3, hidden1) + self.bias3)
+#         return output
+    
+#     # get all weights and biases in list. These are optimisation variables
+#     def get_params(self):
+#         weights1 = self.weights1.flatten()
+#         weights2 = self.weights2.flatten()
+#         weights3 = self.weights3.flatten()
+
+#         params = np.hstack([weights1, weights2, weights3])
+#         return params
+    
+#     def set_params(self, params):
+#         params = np.array(params)
+#         self.weights1 = params[ : N_X*N_H1].reshape((N_H1, N_X))
+#         self.weights2 = params[N_X*N_H1 : N_X*N_H1 + N_H2*N_H1].reshape((N_H2, N_H1))
+#         self.weights3 = params[N_X*N_H1 + N_H2*N_H1 : ].reshape((N_Y, N_H2))
+
+#         self.bias1 = 0
+#         self.bias2 = 0
+#         self.bias3 = 0
 
 
 
@@ -64,7 +184,6 @@ class NeuralNetwork:
 # input_array = np.random.randn(N_X)
 # output_array = model.forward(input_array)
 # print(output_array)
-
 
 
 # def check_obstacles(segments, direction, grid_size):

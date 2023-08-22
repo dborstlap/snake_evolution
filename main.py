@@ -1,70 +1,75 @@
 #################################################################################
-# Name        : snake_game_v1.py
+# Name        : main.py
 #
-# Description : Initial attempt to make a snake game that could be played by a human
+# Description : Main file, used to run the genetic optimisation algorithm
 #
 # Name        : Dries Borstlap
 # Student #   : 4648099
 ##################################################################################
 
 
-#TODO
+# TODO
 # make it possible to run main.py in terminal, and give it standard inputs to choose between play_yourself of train_ai
 # check installation procedure in readme
 # Readme maybe add problem defenition and goals for this project in the beginning.
 # and Readme also add section about hyperparameters maybe
 
 
-# imports
+# IMPORTS
 from genetic_algorithm import initialize_population, evolve_population, evaluate_fitness
 from save_data import save_genes, save_score, save_dict_to_file
-from snake_game import run_game
+import neural_net
 import numpy as np
-from neural_net import N_H1, N_H2
 
-# constants
+# CONSTANTS
 POPULATION_SIZE = 1000
 MUTATION_RATE = 0.01
-PARENT_FRACTION = 0.1
-GENERATIONS = 1000
+PARENT_FRACTION = 0.15
+GENERATIONS = 2000
+
 MAX_AGE = 1000
 
-run_evolution = True
 
-if run_evolution:
 
-    hyper_params = {
+#-----------------------
+# GENETIC OPTIMISATION
+#-----------------------
+
+# define and save hyperparameters to file, so can be reviewed when analysing data
+hyper_params = {
     'POPULATION_SIZE': POPULATION_SIZE,
     'MUTATION_RATE': MUTATION_RATE,
     'PARENT_FRACTION': PARENT_FRACTION,
     'GENERATIONS': GENERATIONS,
     'MAX_AGE': MAX_AGE,
-    'N_H': [N_H]
-    }
-
-    save_dict_to_file(hyper_params)
-
-    population = initialize_population(POPULATION_SIZE)
-
-    for generation in range(GENERATIONS):
-        print('Generation:', generation)
-
-        # Evaluate fitness, perform selection, crossover, and mutation
-        population, best_snake, scores = evolve_population(population, POPULATION_SIZE, PARENT_FRACTION, MUTATION_RATE, MAX_AGE)
-
-        # save the best snake genes of every generation in a csv file
-        save_genes(best_snake.genes, generation)
-
-        # save the scores of every generation in a csv file
-        save_score(scores, generation)
-
-        best_score, average_score = scores
-        print('Best fitness:',best_score, 'Average fitness:', average_score)
-
-    # end result best snake
-    print(best_snake.genes)
+    'NODES': neural_net.NODES }
+save_dict_to_file(hyper_params)
+     
 
 
+# neural_net.change_nodes(node1)
+# print(neural_net.NODES)
+
+# initialize the population of snakes
+population = initialize_population(POPULATION_SIZE)
+
+# perform genetic algorithm for n generations
+for generation in range(GENERATIONS):
+
+    # Evaluate fitness, perform selection, crossover, and mutation
+    population, best_snake, scores = evolve_population(population, POPULATION_SIZE, PARENT_FRACTION, MUTATION_RATE, MAX_AGE)
+    best_score, average_score = scores
+
+    # print results
+    print('Generation:', generation)
+    print('Best fitness:',best_score, 'Average fitness:', average_score)
+
+    # save results for future analysis
+    save_score(scores, generation, filename='final/scores_'+str(neural_net.NODES))
+    save_genes(best_snake.genes, generation)
+
+# print trained result
+print('Best fitness:',best_score, 'Average fitness:', average_score)
 
 
 

@@ -8,16 +8,21 @@
 import random
 import numpy as np
 from snake_game import Snake, SnakeGame
-from neural_net import NUM_WEIGHTS
+from neural_net import NeuralNet
 
 
 
 
 def initialize_population(population_size):
+
     population = []
     for _ in range(population_size):
+        
+        n_params = NeuralNet().n_params
+
+        params = np.random.uniform(-1, 1, size = n_params)
+
         snake = Snake()
-        params = np.random.uniform(-1, 1, size = NUM_WEIGHTS)
         snake.set_genes(params)
         population.append(snake)
     return population
@@ -35,10 +40,10 @@ def evaluate_fitness(snake, max_age):
 
     # Assign weights to each factor to prioritize them differently
     score_weight = 1
-    age_weight = 0.001
+    age_weight = 0.0
 
     # Calculate the overall fitness using a weighted sum of the factors
-    fitness = score_weight * score + age_weight * age
+    fitness = score_weight * score - age_weight * age
 
     snake.fitness = fitness
     return fitness

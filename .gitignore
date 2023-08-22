@@ -1,2 +1,5 @@
 venv/
+data/
+figures/
+video/
 __pycache__/

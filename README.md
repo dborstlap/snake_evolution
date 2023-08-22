@@ -19,6 +19,7 @@ Play the classic snake game, or let the snake game play itself. Let an AI contro
 
 ## Introduction
 
+
 The classic arcade snake game allows players to control a snake and make it grow as it eats food. The snake can move around in a square grid, and grows by one block each time it eats food. The score players recieve is the total amount of food eaten.
 
 In this project, this simple game is remade using python. On top of that, a neural network is created which can control the snake by itself, and a genetic algorithm is written that can train this neural network to become better and better over time.
@@ -31,7 +32,7 @@ In this project, this simple game is remade using python. On top of that, a neur
 - Classic Snake game implementation.
 - AI-controlled snake powered by a neural network.
 - Genetic algorithm to optimize the AI's behavior.
-- Fitness evaluation based on score and survival time.
+- Fitness evaluation based on score (and other factors such as survival time can also be added easily).
 - Customizable design parameters for the neural network, genetic algorithm and snake game itself.
 - Save and analyze results from the optimization process. 
 - Visualize results such as training progress graphs and videos of AI game-play behaviour.
@@ -77,7 +78,7 @@ The genetic algorithm is a key component of this project, driving the optimizati
 
 1. Initialization: The algorithm starts by generating an initial population of AI-controlled snakes with random neural network parameters.
 
-2. Evaluation: Each snake in the population plays the Snake game, and is given a fitness score based on performance. This performance is a function of game score (apples eaten) and survival time.
+2. Evaluation: Each snake in the population plays the Snake game, and is given a fitness score based on performance. This performance is a function of game score (apples eaten) and possibly also other factors such as survival time.
 
 3. Selection: The snakes are sorted based on earned fitness score, and the best certain percentage of snakes is selected as parents for the next generation.
 

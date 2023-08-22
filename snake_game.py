@@ -4,7 +4,7 @@
 import pygame
 import random
 import math
-from neural_net import get_nn_inputs, NeuralNetwork, check_obstacles
+from neural_net import get_nn_inputs, NeuralNet, check_obstacles
 import time
 import keyboard
 import numpy as np
@@ -260,7 +260,9 @@ class Snake:
 
     def set_genes(self, params):
         self.genes = params
-        self.nn = NeuralNetwork(params)
+        self.nn = NeuralNet()
+        self.nn.set_params(params)
+    
         # N_X, N_H1, N_H2, N_Y = self.nn.N_X, self.nn.N_H1, self.nn.N_H2, self.nn.N_Y
         # self.params = params
 
