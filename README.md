@@ -122,17 +122,10 @@ Contains some help functions to process data and visualize it in the form of gra
 
 
 ## Results and Conclusion
-TODO add graphs and more results
+After many iterations of hyperparameters (analysis and values are shared in the report), the snake game is let to optimise itself for 2000 generations. The result is a snake which became fairly good at playing the game, given the limited amount of inputs it could use.
+![Snake Game Screenshot](figures/run_final.jpg)
 
-The results and conclusion of the genetic algorithm's optimization process can be saved and analyzed. The project provides functionality to store important data, such as the best snake's neural network parameters, fitness scores, and generation-wise statistics. These results can be used to evaluate the performance and effectiveness of the genetic algorithm in improving the AI-controlled snake's gameplay.
-
-To view the saved data and analysis, refer to the results directory. Detailed conclusions and insights can be found in the report.
-
-
-
-
-
-
+More results can also be found in the report.
 
 
 
