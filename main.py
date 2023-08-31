@@ -21,21 +21,16 @@ from save_data import save_genes, save_score, save_dict_to_file
 import neural_net
 import numpy as np
 
-# CONSTANTS
+
+# SETTINGS
 POPULATION_SIZE = 1000
 MUTATION_RATE = 0.01
 PARENT_FRACTION = 0.15
 GENERATIONS = 2000
-
 MAX_AGE = 1000
 
 
-
-#-----------------------
-# GENETIC OPTIMISATION
-#-----------------------
-
-# define and save hyperparameters to file, so can be reviewed when analysing data
+# Save hyperparameters to file, so can be reviewed when analysing data
 hyper_params = {
     'POPULATION_SIZE': POPULATION_SIZE,
     'MUTATION_RATE': MUTATION_RATE,
@@ -46,9 +41,9 @@ hyper_params = {
 save_dict_to_file(hyper_params)
      
 
-
-# neural_net.change_nodes(node1)
-# print(neural_net.NODES)
+#-----------------------
+# GENETIC OPTIMISATION
+#-----------------------
 
 # initialize the population of snakes
 population = initialize_population(POPULATION_SIZE)
@@ -70,7 +65,4 @@ for generation in range(GENERATIONS):
 
 # print trained result
 print('Best fitness:',best_score, 'Average fitness:', average_score)
-
-
-
-
+print('DONE')

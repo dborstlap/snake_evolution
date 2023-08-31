@@ -1,3 +1,13 @@
+#################################################################################
+# Name        : visualize_data.py
+#
+# Description : Functions used for visualizing results
+#
+# Name        : Dries Borstlap
+# Student #   : 4648099
+##################################################################################
+
+# Imports
 import matplotlib.pyplot as plt
 import numpy as np
 from save_data import load_dict_from_file
@@ -50,8 +60,6 @@ def plot_nodes_optimisation():
 
 
 
-
-
 # PLOT HYPERPARAMETER OPTIMISATION
 def plot_hyperparameter_optimisation():
     X = []
@@ -82,10 +90,6 @@ def plot_hyperparameter_optimisation():
     # Show the plot
     plt.savefig('figures/mut_par_800.png')
     plt.show()
-
-
-
-
 
 
 
@@ -121,4 +125,6 @@ def plot_generation_progress():
 
 
 
+
+# Make plots 
 plot_generation_progress()

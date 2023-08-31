@@ -1,10 +1,13 @@
-# TODO
-# check snake sorting method
-# check if sorted right way (not in reverse)
-# make NN part of snake class somehow
-# bring genes outside of snake class, so it can be applied to any game in one click
-# decouple snake from snake_game so not working with snake_game.snake objects
+#################################################################################
+# Name        : genetic_algorithm.py
+#
+# Description : All functions used for running the genetic algorithm
+#
+# Name        : Dries Borstlap
+# Student #   : 4648099
+##################################################################################
 
+# IMPORTS
 import random
 import numpy as np
 from snake_game import Snake, SnakeGame
@@ -12,14 +15,16 @@ from neural_net import NeuralNet
 
 
 
-
+# Initialize a population of certain size
 def initialize_population(population_size):
 
     population = []
     for _ in range(population_size):
         
+        # amount of parameters (=genes) that defines a snake
         n_params = NeuralNet().n_params
 
+        # choose random parameters (=genes) between -1 and 1 initially
         params = np.random.uniform(-1, 1, size = n_params)
 
         snake = Snake()
@@ -28,10 +33,8 @@ def initialize_population(population_size):
     return population
 
 
+# Evaluate the fitness of each snake
 def evaluate_fitness(snake, max_age):
-    # Implement your fitness evaluation logic here
-    # You could consider factors like score, survival time, etc.
-    # Return a fitness value for the given snake
 
     # Calculate fitness based on different factors such as score, survival time, etc.
     game = SnakeGame(snake, max_age, visualize=False)
@@ -49,10 +52,8 @@ def evaluate_fitness(snake, max_age):
     return fitness
 
 
+# Select the 'best' snakes, so they can pass on their genes
 def selection(population, population_fitness, keep_fraction):
-    # Perform selection based on the fitness of each snake in the population
-    # You can use different selection strategies like tournament selection, rank selection, etc.
-    # Return the selected snakes
 
     # Sort the population based on fitness in descending order
     sorted_population = [snake for _, snake in sorted(zip(population_fitness, population), key=lambda x: x[0], reverse=True)]
@@ -68,12 +69,13 @@ def selection(population, population_fitness, keep_fraction):
     return parents, best_snake
 
 
+# Combine genes of parents to form a children population
 def crossover(parents, offspring_size):
-    # Implement crossover operation to create offspring from two parent snakes
-    # Return the offspring snake
 
     offspring = []
     for _ in range(offspring_size):
+
+        # randomly choose two parents from the selected parents
         parent1 = random.choice(parents)
         parent2 = random.choice(parents)
 
@@ -92,18 +94,15 @@ def crossover(parents, offspring_size):
     return offspring
 
 
-
+# Apply random mutations to a snake child
 def mutation(population, MUTATION_RATE):
-    # Implement mutation operation to introduce random changes in the snake's behavior
-    # You can modify the snake's attributes or behavior based on the mutation rate
-    # Return the mutated snake
 
     mutated_population = []
     for snake in population:
         # Get genes which will be mutated
         mutated_genes = snake.genes
 
-        # Apply mutation
+        # Apply mutation to certain percentage of genes
         for i in range(len(mutated_genes)):
             if random.random() < MUTATION_RATE:
                 mutated_genes[i] = np.random.uniform(-1, 1)
@@ -114,30 +113,23 @@ def mutation(population, MUTATION_RATE):
     return mutated_population
 
 
-# def mutation(offspring_crossover, mutation_rate):
-#     # mutating the offsprings generated from crossover to maintain variation in the population
-#     for idx in range(offspring_crossover.shape[0]):
-#         for i in range(offspring_crossover.shape[1]):
-#             if random.uniform(0, 1) < mutation_rate:
-#                 random_value = np.random.choice(np.arange(-1, 1, step = 0.001), size = (1), replace = False)
-#                 offspring_crossover[idx, i] = offspring_crossover[idx, i] + random_value
-#     return offspring_crossover
-
-
-
 def evolve_population(population, population_size, parent_fraction, mutation_rate, max_age):
 
     # Evaluate fitness for each snake
     population_fitness = [evaluate_fitness(snake, max_age) for snake in population]
 
+    # Select parents
     parents, best_snake = selection(population, population_fitness, parent_fraction)
     # print(parents)
 
+    # Create children
     offspring_crossover = crossover(parents, population_size)
     # print(offspring_crossover)
 
+    # Mutate children snakes
     offspring_mutated = mutation(offspring_crossover, mutation_rate)
 
+    # retrieve scores of current population, to be used for plotting
     scores = [max(population_fitness), np.average(population_fitness)]
 
     return offspring_mutated, best_snake, scores

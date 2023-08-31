@@ -1,0 +1,20 @@
+main:
+# TODO
+# make it possible to run main.py in terminal, and give it standard inputs to choose between play_yourself of train_ai
+# check installation procedure in readme
+# Readme maybe add problem defenition and goals for this project in the beginning.
+# and Readme also add section about hyperparameters maybe
+
+
+genetic_algorithm
+# TODO
+# check snake sorting method
+# check if sorted right way (not in reverse)
+# make NN part of snake class somehow
+# bring genes outside of snake class, so it can be applied to any game in one click
+# decouple snake from snake_game so not working with snake_game.snake objects
+
+
+snake_game
+# TODO
+# move age, score and stuff to snake class instead of game

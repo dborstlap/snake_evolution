@@ -1,20 +1,25 @@
-# TODO
-# move age, score and stuff to snake class instead of game
+#################################################################################
+# Name        : snake_game.py
+#
+# Description : All functions and variables used for running the snake game.
+#               Run this file to play snake manually
+#
+# Name        : Dries Borstlap
+# Student #   : 4648099
+##################################################################################
 
+# Imports
 import pygame
 import random
-import math
-from neural_net import get_nn_inputs, NeuralNet, check_obstacles
-import time
-import keyboard
+from neural_net import get_nn_inputs, NeuralNet
 import numpy as np
 import cv2
 import os
 
-# Three different control functions which can all act at the same time (though it is recomended to choose one at a time). For normal playing, put key_control=True and all rest to False.
-key_control = False
-auto_control = False
-ai_control = True
+# Three different control ways to control the snake. For normal playing, put key_control=True and all rest to False.
+key_control = False      # play manually
+auto_control = False     # uses the hardcoded control function called 'automatic_snake_control' to control the snake
+ai_control = True        # Uses a neural net to control the snake (can be optimised with genetic algorithm)
 
 
 # Game constants
@@ -23,7 +28,6 @@ GRID_HEIGHT = 10
 GRID_SIZE = 20
 WINDOW_WIDTH = GRID_WIDTH*GRID_SIZE
 WINDOW_HEIGHT = GRID_HEIGHT*GRID_SIZE
-
 FPS = 10
 
 # Colors
@@ -76,7 +80,7 @@ def keyboard_snake_control(snake, food):
         snake.direction = LEFT
 
 
-
+# Hardcoded snake control function
 def automatic_snake_control(snake, food):
     head_x, head_y = snake.segments[0]
     food_x, food_y = food.position
@@ -92,14 +96,20 @@ def automatic_snake_control(snake, food):
         snake.direction = UP
 
 
-
+# Neural net control function
 def ai_snake_control(snake, food):
+
+    # get inputs for neural net based on gameplay
     nn_inputs = get_nn_inputs(snake, food, [GRID_WIDTH, GRID_HEIGHT])
+
+    # Do forward pass of neural net and get outputs
     output = snake.nn.forward(nn_inputs)
+
+    # Transform outputs into a 'best' direction
     max_index = np.argmax(output)
     direction = DIRECTIONS[max_index]
 
-
+    # Set new direction based on neural net outputs
     if direction == UP and snake.direction != DOWN:
         snake.direction = UP
     elif direction == DOWN and snake.direction != UP:
@@ -109,17 +119,9 @@ def ai_snake_control(snake, food):
     elif direction == LEFT and snake.direction != RIGHT:
         snake.direction = LEFT
 
-    # convert going left, front and right to the inertial frame directions of up, down, left and right
-    # if direction == 'left':
-    #     snake.direction = [-y if x == 0 else x for x, y in snake.direction]
-    # elif direction == 'front':
-    #     snake.direction = snake.direction
-    # elif direction == 'right':
-    #     snake.direction = [y if x == 0 else -x for x, y in snake.direction]
 
 
-
-
+# Snake game class. Defines game behaviour
 class SnakeGame:
     def __init__(self, snake, max_age=np.inf, visualize=True, record=False):
         self.visualize = visualize
@@ -195,6 +197,7 @@ class SnakeGame:
             if self.record:
                 self.save_recording()
 
+    # Move the snake and update game
     def update(self):
         self.age +=1
         self.snake.move(self.food)
@@ -205,7 +208,7 @@ class SnakeGame:
         if self.snake.collides_with_self() or self.snake.collides_with_wall():
             self.alive = False
                 
-
+    # visualize game state on pygame screen
     def draw(self):
         # draw backround, snake and food
         self.screen.fill(BLACK)
@@ -223,6 +226,7 @@ class SnakeGame:
         score_text = font.render(f"Score: {self.score}", True, WHITE)
         self.screen.blit(score_text, (10, 10))
 
+    # Snake dies
     def game_over(self):
         font = pygame.font.SysFont(None, 48)
         game_over_text = font.render("Game Over", True, RED)
@@ -230,11 +234,12 @@ class SnakeGame:
         pygame.display.flip()
         pygame.time.wait(2000)
 
-
+    # Get current score
     def get_score(self):
         self.run()
         return self.score 
     
+    # save recordings of gameplay to rewatch later
     def save_recording(self):
         pygame.surfarray.use_arraytype("numpy")
         output_file =os.path.join(os.getcwd(), 'video/snake_recorded.mp4')
@@ -251,7 +256,7 @@ class SnakeGame:
            
     
 
-# Snake class
+# Snake class, which defines one snake individual
 class Snake:
     def __init__(self):
         self.direction = RIGHT
@@ -318,7 +323,7 @@ class Food:
 
 
 
-# simulate and visualize a game with given snake genes
+# run a game once with given snake genes
 def run_game(genes, visualize=True, record=True):
     snake = Snake()
     snake.set_genes(genes)
@@ -328,7 +333,10 @@ def run_game(genes, visualize=True, record=True):
 
 
 
-
-
+# Play the game manually by running this file
+if __name__=='main':
+    snake = Snake()
+    game = SnakeGame(snake)
+    game.run()
 
 
