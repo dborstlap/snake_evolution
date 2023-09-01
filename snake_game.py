@@ -16,19 +16,13 @@ import numpy as np
 import cv2
 import os
 
-# Three different control ways to control the snake. For normal playing, put key_control=True and all rest to False.
-key_control = False      # play manually
-auto_control = False     # uses the hardcoded control function called 'automatic_snake_control' to control the snake
-ai_control = True        # Uses a neural net to control the snake (can be optimised with genetic algorithm)
-
-
 # Game constants
 GRID_WIDTH = 10
 GRID_HEIGHT = 10
-GRID_SIZE = 20
+GRID_SIZE = 30
 WINDOW_WIDTH = GRID_WIDTH*GRID_SIZE
 WINDOW_HEIGHT = GRID_HEIGHT*GRID_SIZE
-FPS = 10
+FPS = 8
 
 # Colors
 BLACK = (0, 0, 0)
@@ -123,13 +117,15 @@ def ai_snake_control(snake, food):
 
 # Snake game class. Defines game behaviour
 class SnakeGame:
-    def __init__(self, snake, max_age=np.inf, visualize=True, record=False):
+    def __init__(self, snake, max_age=np.inf, visualize=True, record=False, control_mode='ai_control'):
         self.visualize = visualize
         if self.visualize:
             pygame.init()
             self.screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
             pygame.display.set_caption("Snake Game")
             self.clock = pygame.time.Clock()
+
+            self.start_screen()
 
         self.record = record
         if self.record:
@@ -141,6 +137,7 @@ class SnakeGame:
         self.age = 0
         self.max_age = max_age
         self.snake = snake
+        self.control_mode = control_mode
         
 
     def run(self):
@@ -162,15 +159,15 @@ class SnakeGame:
 
 
             # control directions based on arrow keys
-            if key_control:
+            if self.control_mode == 'key_control':
                 keyboard_snake_control(self.snake, self.food)
 
-            # controlled by ai
-            if auto_control:
+            # controlled by hardcoded function
+            if self.control_mode == 'auto_control':
                 automatic_snake_control(self.snake, self.food)
 
             # controlled by ai
-            if ai_control:
+            if self.control_mode == 'ai_control':
                 ai_snake_control(self.snake, self.food)
 
             # update the snake position one step using the chosen algorithm
@@ -210,6 +207,7 @@ class SnakeGame:
                 
     # visualize game state on pygame screen
     def draw(self):
+
         # draw backround, snake and food
         self.screen.fill(BLACK)
         self.snake.draw(self.screen)
@@ -225,6 +223,25 @@ class SnakeGame:
         font = pygame.font.SysFont(None, 24)
         score_text = font.render(f"Score: {self.score}", True, WHITE)
         self.screen.blit(score_text, (10, 10))
+
+
+    # Start screen
+    def start_screen(self):
+        press2start = True
+
+        font = pygame.font.Font(None, 30)
+        start_screen_text = font.render("Press Space to Start", True, (255, 255, 255))
+    
+        # while loop for start screen
+        while press2start:
+
+            # Check if space bar is pressed. If so start game
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                    press2start=False
+            self.screen.blit(start_screen_text, (WINDOW_WIDTH // 2 - start_screen_text.get_width() // 2, WINDOW_HEIGHT // 2))
+            pygame.display.flip()
+            self.clock.tick(FPS)
 
     # Snake dies
     def game_over(self):
@@ -334,9 +351,9 @@ def run_game(genes, visualize=True, record=True):
 
 
 # Play the game manually by running this file
-if __name__=='main':
+if __name__ == "__main__":
     snake = Snake()
-    game = SnakeGame(snake)
+    game = SnakeGame(snake=snake, control_mode='key_control')
     game.run()
 
 
